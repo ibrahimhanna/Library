@@ -120,8 +120,14 @@ public class Welcome {
 	 
 	 @PostMapping("/loginn")
 	 public String loginForm(@ModelAttribute("user") Login user , Model model) {
-	   
-		 boolean loginStatus = loginService.login(user.getUsername(), user.getPassword());
+		 boolean loginStatus = false;
+	
+		 try {
+		  loginStatus = loginService.login(user.getUsername(), user.getPassword());
+		 }
+		 catch (Exception e) {
+			 loginStatus = false;
+		}
 		 
 		 if(loginStatus) {
 			 return "sucess";
