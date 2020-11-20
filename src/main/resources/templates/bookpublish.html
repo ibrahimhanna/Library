@@ -1,0 +1,81 @@
+<html>
+
+<head>
+	<title>Publish Book</title>
+</head>
+
+<body>
+	<div align="center">
+    <form action="#" th:action="@{/publish-book}" method="post" th:object="${book}">
+
+      <table>
+          <tr>
+             <td>
+				 Book Name
+			 </td>
+          <td>
+			  <input type="text" th:field="*{bookname}" placeholder="Book Name" required/>
+		  </td>
+		  </tr>
+	 <input type="hidden"/>
+	 
+
+         <tr>
+        <td>
+			Publish Date
+		</td>
+         <td>
+                 <input type="date" th:field="*{publish_date}"  placeholder="Publish Date" required/>
+			</td>
+         </tr>
+          <tr>
+			<td>
+			ISBN
+		</td>
+         <td>
+                 <input type="text" th:field="*{ISBN}" placeholder="ISBN" required/>
+			</td>
+          </tr>
+
+
+		   <tr>
+
+         <td>
+			Book Type 
+		</td>
+         <td>
+                 <input type="text" th:field="*{type}" placeholder="Book Type" required/>
+			</td>
+
+
+		 </tr>
+
+          <tr>
+
+           <td>
+
+		   </td>
+           <td align="right">
+				<input type="submit" value="publish"/>
+		   </td>
+		  </tr>
+ 
+
+
+
+	  </table>
+
+
+
+
+
+
+	</form>
+
+  </div>
+
+
+
+</body>
+
+</html>

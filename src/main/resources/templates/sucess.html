@@ -3,8 +3,100 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Welcome to Library</title>
+<link rel="stylesheet" href="sucess.css" />
 </head>
 <body>
-       Library Home page
+       <table>
+       <tr>
+
+      <td>
+        <a href="/index" >index</a>
+       </td>
+
+
+
+      <td style="width: 20%;">
+      <span  th:if="${accountType == 1}">
+          <a href="/create-book">Publish Book</a>
+          <a href="/mybooks">MyBooks</a>
+          </span> 
+      </td>
+      <td style="width: 70%;">
+            <form action="#" th:action="@{/booksearch}" th:object="${search}" method="POST">   
+            <input type="search" th:field="*{searchtext}" style="width: auto;"/>
+            <button>Search</button>
+             </form>
+      </td>
+
+         <td style="width: 250px;align:right">
+            <a href="/destroy">Signout</a>
+        </td>
+        
+
+      </tr>
+
+         
+
+
+        </table>
+
+    <br/>
+
+     <table>
+
+<tr style="width: 100%;">
+       <th style="width: 20%;border: 10px solid black;color: forestgreen;">
+           Book Name
+       </th>
+        <th style="width: 20%;border: 10px solid black;color: forestgreen;">
+           Book Author
+       </th>
+        <th style="width: 20%;border: 10px solid black;color: forestgreen;">
+           Publish Date
+       </th>
+        <th style="width: 20%;border: 10px solid black;color: forestgreen;">
+          ISBN
+       </th>
+        <th style="width: 20%;border: 10px solid black;color: forestgreen;">
+          Type
+       </th>
+</tr>
+<tr style="width: 100%;border: 2px;" th:each="book: ${books}">
+       <td style="width: 20%;border: 2px solid black;">
+          <p th:text="${book.bookname}"></p> 
+       </td>
+        <td style="width: 20%;border: 2px solid black;">
+         
+             <p th:text="${book.user.firstname}"></p> <p th:text="${book.user.lastname}"></p> 
+       </td>
+        <td style="width: 20%;border: 2px solid black;">
+             <p th:text="${book.publish_date}"></p>
+       </td>
+        <td style="width: 20%;border: 2px solid black;">
+           <p th:text="${book.ISBN}"></p>
+       </td>
+        <td style="width: 20%;border: 2px solid black;">
+          <p th:text="${book.type}"></p>
+       </td>
+       </tr>
+
+
+     </table>
+
+
+            <br/><br/>
+
+      <table>
+        <tr>
+               <span th:if="${url == 'randombooks'}">
+          
+          <td th:each="i: ${#numbers.sequence(1, bookscount/5)}">
+         <a th:href="@{/books(start=${i*5-5},end=${i*5})}">  <p th:text="${i}"></p>   </a> 
+     
+        </td>
+               </span>
+        </tr>
+</table>
+
 </body>
 </html>

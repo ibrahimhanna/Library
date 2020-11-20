@@ -40,5 +40,15 @@ public class UserService {
 	}
 	
 	
+	public User getUser(String email) {
+		
+		List<User> user = userRepository.findByEmail(email);
+		if(user.size()>0) {
+		return user.get(0);
+		}
+		return null;
+	}
+	
+	
 	
 }

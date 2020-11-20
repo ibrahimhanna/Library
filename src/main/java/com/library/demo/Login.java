@@ -2,9 +2,12 @@ package com.library.demo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +27,8 @@ public class Login {
 	@Column(name="email")
 	String email;
 
-
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -63,6 +67,9 @@ public class Login {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
+	
 	
 	
 	

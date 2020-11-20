@@ -15,15 +15,15 @@ public class LoginService {
 	
 	
 	
-	public boolean login(String username, String password) {
+	public Login login(String username, String password) {
 		
 		List<Login> user = loginRepository.findByUsername(username);
 		if(user!=null && user.get(0).getPassword().equals(password)) {
-			return true;
+			return user.get(0);
 		}
 		
 		
-		return false;
+		return null;
 	}
 	
 	

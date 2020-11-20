@@ -3,6 +3,8 @@ package com.library.demo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,11 @@ public class Welcome {
 	
 	@Autowired
 	CountryService countryService;
+	
+	
+	@Autowired
+	BookService bookService;
+	
 	
 	 @GetMapping("/welcome")
 	public String welcome() {
@@ -106,30 +113,55 @@ public class Welcome {
 	 
 	 @RequestMapping("/login")
 	   @ResponseBody
-	   public boolean login(@RequestParam String username,@RequestParam String password) {
-		 
+	   public Login login(@RequestParam String username,@RequestParam String password) {
+		
+
 		 return loginService.login(username, password);
 
 	 }
 	 
 	 @GetMapping("/index")
-	 public String index(Model model ) {
+	 public String index(Model model,HttpSession session ) {
+ String messages = (String) session.getAttribute("userID");
+
+
+				if (messages!=null) {
+					 User userT = userService.getUser((String)session.getAttribute("userID"));
+					 model.addAttribute("accountType", userT.getAccount_type());
+					 model.addAttribute("bookscount",bookService.getBooksCount());
+					 model.addAttribute("search", new Search());
+					 List<Book> books = bookService.fetchBooks(0,5);
+					 model.addAttribute("books", books);
+					return "sucess"; 
+				}else {
 		 model.addAttribute("user", new Login());
+			
 		 return "index";
+				}
 	 }
 	 
 	 @PostMapping("/loginn")
-	 public String loginForm(@ModelAttribute("user") Login user , Model model) {
-		 boolean loginStatus = false;
-	
+	 public String loginForm(@ModelAttribute("user") Login user , Model model,HttpSession session) {
+		 Login loginner = null;
+				
+	 
 		 try {
-		  loginStatus = loginService.login(user.getUsername(), user.getPassword());
+			 loginner = loginService.login(user.getUsername(), user.getPassword());
+              session.setAttribute("userID", loginner.getEmail());
 		 }
 		 catch (Exception e) {
-			 loginStatus = false;
+			 loginner = null;
 		}
 		 
-		 if(loginStatus) {
+		 if(loginner!=null) {
+			 User userT = userService.getUser(loginner.getEmail());
+			 model.addAttribute("search", new Search());
+			 model.addAttribute("accountType", userT.getAccount_type());
+			 model.addAttribute("bookscount",bookService.getBooksCount());
+			 model.addAttribute("url","randombooks");
+			 List<Book> books = bookService.fetchBooks(0,5);
+			 model.addAttribute("books", books);
+			 
 			 return "sucess";
 		 }
 		 
